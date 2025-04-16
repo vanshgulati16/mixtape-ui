@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
@@ -29,7 +29,7 @@ const animations = `
   }
 `;
 
-export default function tapePlayer() {
+function TapePlayerContent() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isTapeInserted, setIsTapeInserted] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
@@ -515,5 +515,17 @@ export default function tapePlayer() {
         </div>
       )}
     </main>
+  );
+}
+
+export default function TapePlayer() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-sand-light p-8 flex items-center justify-center">
+        <div className="text-primary">Loading...</div>
+      </div>
+    }>
+      <TapePlayerContent />
+    </Suspense>
   );
 } 
